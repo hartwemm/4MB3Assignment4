@@ -115,7 +115,7 @@ plot( s$freq, s$spec, type="l")
 
 \end{enumerate}
 
-%\smpxnathistfig
+\smpxnathistfig
 
 \bigskip
 \centerline{\bf--- END OF ASSIGNMENT ---}
