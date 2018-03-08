@@ -78,8 +78,38 @@ plot( s$freq, s$spec, type="l")
 \begin{enumerate}[(a)]
 
 \item \SEa
-
-\BeautifulSolution
+{\color{blue}
+We wrote the following code to solve the SI model using the Gillespie algorithm.
+<<Qi, fig.show='hold'>>=
+suppressWarnings(library(ggplot2))
+suppressWarnings(library(viridisLite))
+# Gillespie Algorithm
+SI.Gillespie <- function (beta, N , I0, tmax) {
+  t=0
+  I=I0
+  iter=tmax
+  time <- c(t)
+  prev <- c(I)
+  while (t <= tmax && I <= N) {
+    # Rate of moving from S to I
+    a0=beta*(N-I)*I
+    # Time of the next event
+    t <- t + 1/a0*log(1/(1-runif(1)))
+    # The event is I increasing by 1
+    I <- I+1
+    # Save data point into vectors
+    time <- c(time,t)
+    prev <- c(prev,I)
+  }
+  df <- data.frame(Time=time,Prevalence=prev)
+  return(df)
+}
+df <- SI.Gillespie(1,1000,1,tmax=1)
+ggplot(df,aes(x=Time,y=Prevalence))+
+  geom_point(col="dodgerblue")+
+  ggtitle("Gillespie Approximation to SI Model")
+@
+}
 
 \item \SEb
 
